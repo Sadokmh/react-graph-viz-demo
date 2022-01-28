@@ -1,0 +1,101 @@
+.node__root > circle {
+    fill: #be5353;
+  }
+  
+  .node__branch > circle {
+    fill: #fdd1d1;
+  }
+  
+
+  .node__branch .rd3t-label__attributes {
+    stroke: #fdd1d1;
+    stroke-width: 0.2;
+    font-size: smaller;
+}
+
+
+
+  .node__leaf > circle {
+    fill: #faefef
+    /* Let's also make the radius of leaf nodes larger */
+
+  }
+
+  .node__leaf .rd3t-label__attributes {
+    stroke: #d19696;
+    stroke-width: 0.3;
+    font-size: x-small;
+    fill: #d19696;
+
+  }
+
+  .node_container {
+    text-align: left;
+  }
+
+  .node_name {
+    
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .leaf_name {
+    text-align: center;
+    color: #000;
+    text-shadow: 0 0 2px #000;
+  }
+
+  .name-margin {
+    margin-left: 35px;
+  }
+
+  .node_contains {
+    margin-left: 45px;
+    font-weight: 500;
+  }
+
+  .node_content {
+    margin-left: 60px;
+    font-weight: 200;
+  }
+
+  .node-selected path{
+    fill: #2587ad;
+  }
+
+  .node-selected{
+    outline: 2px dashed #2587ad;
+  }
+
+
+  .person-icon {
+    stroke-width: 15;
+  }
+
+  .person-icon.node-selected {
+    outline: 20px dashed #2587ad;
+  }
+
+
+  .custom-dropdown {
+    
+   
+    width: 300px;
+    z-index: 2;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: white;
+  }
+  
+  .custom-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .custom-dropdown li {
+    padding: 8px 12px;
+  }
+  
+  .custom-dropdown li:hover {
+    background-color: rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+  }
