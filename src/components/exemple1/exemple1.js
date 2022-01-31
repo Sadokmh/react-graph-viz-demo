@@ -5,6 +5,7 @@ import Dropdown from "rc-dropdown";
 import Menu, { Item as MenuItem } from "rc-menu";
 import "./custom-tree.css";
 import {
+  CustomMenu,
   CustomModal,
   IconAddress,
   IconDocument,
@@ -22,14 +23,31 @@ export default function Exemple1() {
   const [data, setData] = useState(orgChart);
   const [dropdownState, setDropdwonState] = useState(false);
   const [node, setNode] = useState("");
+  const [selectedNodes, setSelectedNodes] = useState([]);
   const [pNode, setPNode] = useState("");
   const [dNode, setDNode] = useState("");
   const [content, setContent] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [doc, setDoc] = useState(null);
+  const [selectionMode, setSelectionMode] = useState(false);
 
   const onNodeClick = (e) => {
     if (e.data && e.data.content) {
+    }
+  };
+
+  const onSelectNode = (node) => {
+    const index = selectedNodes.findIndex(
+      (item) => item.__rd3t.id === node.__rd3t.id
+    );
+    console.log(index);
+    if (index >= 0) {
+      const filtredNodes = selectedNodes.filter(
+        (item) => item.__rd3t.id !== node.__rd3t.id
+      );
+      setSelectedNodes(filtredNodes);
+    } else {
+      setSelectedNodes([...selectedNodes, node]);
     }
   };
 
@@ -40,8 +58,10 @@ export default function Exemple1() {
           <IconDocument
             toggleNode={toggleNode}
             node={nodeDatum}
-            setNode={(e) => setNode(e)}
+            setNode={(e) => onSelectNode(e)}
             activeNode={node}
+            selectedNodes={selectedNodes}
+            selectionMode={selectionMode}
           />
         );
       case "P":
@@ -49,32 +69,40 @@ export default function Exemple1() {
           <IconParagraph
             toggleNode={toggleNode}
             node={nodeDatum}
-            setNode={(e) => setNode(e)}
+            setNode={(e) => onSelectNode(e)}
             activeNode={node}
+            selectedNodes={selectedNodes}
+            selectionMode={selectionMode}
           />
         );
       case "I_PHONE":
         return (
           <IconPhone
             node={nodeDatum}
-            setNode={(e) => setNode(e)}
+            setNode={(e) => onSelectNode(e)}
             activeNode={node}
+            selectedNodes={selectedNodes}
+            selectionMode={selectionMode}
           />
         );
       case "I_ADDRESS":
         return (
           <IconAddress
             node={nodeDatum}
-            setNode={(e) => setNode(e)}
+            setNode={(e) => onSelectNode(e)}
             activeNode={node}
+            selectedNodes={selectedNodes}
+            selectionMode={selectionMode}
           />
         );
       case "I_PERSON":
         return (
           <IconPerson
             node={nodeDatum}
-            setNode={(e) => setNode(e)}
+            setNode={(e) => onSelectNode(e)}
             activeNode={node}
+            selectedNodes={selectedNodes}
+            selectionMode={selectionMode}
           />
         );
 
@@ -238,34 +266,41 @@ export default function Exemple1() {
     setDoc(null);
   };
 
+  useEffect(() => {
+    setSelectedNodes([]);
+  }, [selectionMode]);
+
   return (
     // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
-    <div id="treeWrapper" style={{ width: "100em", height: "100em" }}>
-      <Tree
-        data={data}
-        rootNodeClassName="node__root"
-        branchNodeClassName="node__branch"
-        leafNodeClassName="node__leaf"
-        separation={{ nonSiblings: 1, siblings: 2 }}
-        onNodeClick={(e) => onNodeClick(e)}
-        renderCustomNodeElement={(rd3tProps) =>
-          renderForeignObjectNode({ ...rd3tProps, foreignObjectProps })
-        }
-      />
-      <Modal
-        isOpen={showModal}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-      >
-        {content && <div>{content}</div>}
-        {doc && (
-          <DocumentViewer
-            queryParams="hl=Nl"
-            url={doc}
-            overrideLocalhost="https://react-doc-viewer.firebaseapp.com/"
-          />
-        )}
-      </Modal>
+    <div className="container">
+      <CustomMenu selectionMode={(mode) => setSelectionMode(mode)} />
+      <div id="treeWrapper" style={{ width: "100em", height: "100em" }}>
+        <Tree
+          data={data}
+          rootNodeClassName="node__root"
+          branchNodeClassName="node__branch"
+          leafNodeClassName="node__leaf"
+          separation={{ nonSiblings: 1, siblings: 2 }}
+          onNodeClick={(e) => onNodeClick(e)}
+          renderCustomNodeElement={(rd3tProps) =>
+            renderForeignObjectNode({ ...rd3tProps, foreignObjectProps })
+          }
+        />
+        <Modal
+          isOpen={showModal}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+        >
+          {content && <div>{content}</div>}
+          {doc && (
+            <DocumentViewer
+              queryParams="hl=Nl"
+              url={doc}
+              overrideLocalhost="https://react-doc-viewer.firebaseapp.com/"
+            />
+          )}
+        </Modal>
+      </div>
     </div>
   );
 }

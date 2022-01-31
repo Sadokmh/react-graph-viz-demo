@@ -1,7 +1,31 @@
-import React from "react";
-import Modal from "react-modal";
+import React, { useEffect, useState } from "react";
+import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
 
-export function IconDocument({ toggleNode, node, setNode, activeNode }) {
+export const IconDocument = ({
+  toggleNode,
+  node,
+  setNode,
+  activeNode,
+  selectedNodes,
+  selectionMode,
+}) => {
+  const [isNodeSelected, setNodeSelected] = useState(false);
+
+  useEffect(() => {
+    if (selectedNodes) {
+      const index = selectedNodes.findIndex(
+        (item) => item.__rd3t.id === node.__rd3t.id
+      );
+      if (index >= 0) {
+        setNodeSelected(true);
+      } else {
+        setNodeSelected(false);
+      }
+    }
+  }, [selectedNodes]);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,11 +39,11 @@ export function IconDocument({ toggleNode, node, setNode, activeNode }) {
       xmlSpace="preserve"
       onClick={(e) => {
         setNode(node);
-        toggleNode();
+        if (!selectionMode) {
+          toggleNode();
+        }
       }}
-      className={
-        activeNode && node.name === activeNode.name ? "node-selected" : ""
-      }
+      className={isNodeSelected && selectionMode ? "node-selected" : ""}
     >
       <path
         fill="#be5353"
@@ -27,9 +51,31 @@ export function IconDocument({ toggleNode, node, setNode, activeNode }) {
       ></path>
     </svg>
   );
-}
+};
 
-export function IconParagraph({ toggleNode, node, setNode, activeNode }) {
+export const IconParagraph = ({
+  toggleNode,
+  node,
+  setNode,
+  activeNode,
+  selectedNodes,
+  selectionMode,
+}) => {
+  const [isNodeSelected, setNodeSelected] = useState(false);
+
+  useEffect(() => {
+    if (selectedNodes) {
+      const index = selectedNodes.findIndex(
+        (item) => item.__rd3t.id === node.__rd3t.id
+      );
+      if (index >= 0) {
+        setNodeSelected(true);
+      } else {
+        setNodeSelected(false);
+      }
+    }
+  }, [selectedNodes]);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -43,11 +89,11 @@ export function IconParagraph({ toggleNode, node, setNode, activeNode }) {
       xmlSpace="preserve"
       onClick={(e) => {
         setNode(node);
-        toggleNode();
+        if (!selectionMode) {
+          toggleNode();
+        }
       }}
-      className={
-        activeNode && node.name === activeNode.name ? "node-selected" : ""
-      }
+      className={isNodeSelected && selectionMode ? "node-selected" : ""}
     >
       <path
         fill="#be5353"
@@ -59,9 +105,30 @@ export function IconParagraph({ toggleNode, node, setNode, activeNode }) {
       ></path>
     </svg>
   );
-}
+};
 
-export function IconPhone({ node, setNode, activeNode }) {
+export const IconPhone = ({
+  node,
+  setNode,
+  activeNode,
+  selectedNodes,
+  selectionMode,
+}) => {
+  const [isNodeSelected, setNodeSelected] = useState(false);
+
+  useEffect(() => {
+    if (selectedNodes) {
+      const index = selectedNodes.findIndex(
+        (item) => item.__rd3t.id === node.__rd3t.id
+      );
+      if (index >= 0) {
+        setNodeSelected(true);
+      } else {
+        setNodeSelected(false);
+      }
+    }
+  }, [selectedNodes]);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -74,9 +141,7 @@ export function IconPhone({ node, setNode, activeNode }) {
       viewBox="0 0 53.942 53.942"
       xmlSpace="preserve"
       onClick={() => setNode(node)}
-      className={
-        activeNode && node.name === activeNode.name ? "node-selected" : ""
-      }
+      className={isNodeSelected && selectionMode ? "node-selected" : ""}
     >
       <path
         fill="#fdd1d1"
@@ -84,9 +149,30 @@ export function IconPhone({ node, setNode, activeNode }) {
       ></path>
     </svg>
   );
-}
+};
 
-export function IconAddress({ node, setNode, activeNode }) {
+export const IconAddress = ({
+  node,
+  setNode,
+  activeNode,
+  selectedNodes,
+  selectionMode,
+}) => {
+  const [isNodeSelected, setNodeSelected] = useState(false);
+
+  useEffect(() => {
+    if (selectedNodes) {
+      const index = selectedNodes.findIndex(
+        (item) => item.__rd3t.id === node.__rd3t.id
+      );
+      if (index >= 0) {
+        setNodeSelected(true);
+      } else {
+        setNodeSelected(false);
+      }
+    }
+  }, [selectedNodes]);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +182,7 @@ export function IconAddress({ node, setNode, activeNode }) {
       height="60"
       viewBox="0 0 100 100"
       onClick={() => setNode(node)}
-      className={
-        activeNode && node.name === activeNode.name ? "node-selected" : ""
-      }
+      className={isNodeSelected && selectionMode ? "node-selected" : ""}
     >
       <path
         fill="#fdd1d1"
@@ -106,10 +190,31 @@ export function IconAddress({ node, setNode, activeNode }) {
       ></path>
     </svg>
   );
-}
+};
 
-export function IconPerson({ node, setNode, activeNode }) {
-  console.log(node);
+export const IconPerson = ({
+  node,
+  setNode,
+  activeNode,
+  selectedNodes,
+  selectionMode,
+}) => {
+  const [isNodeSelected, setNodeSelected] = useState(false);
+
+  useEffect(() => {
+    console.log(selectedNodes);
+    if (selectedNodes) {
+      const index = selectedNodes.findIndex(
+        (item) => item.__rd3t.id === node.__rd3t.id
+      );
+      if (index >= 0) {
+        setNodeSelected(true);
+      } else {
+        setNodeSelected(false);
+      }
+    }
+  }, [selectedNodes]);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +225,7 @@ export function IconPerson({ node, setNode, activeNode }) {
       viewBox="0 0 512 512"
       className={
         "person-icon " +
-        (activeNode && node.name === activeNode.name ? "node-selected" : "")
+        (isNodeSelected && selectionMode ? "node-selected" : "")
       }
       onClick={() => setNode(node)}
     >
@@ -130,4 +235,40 @@ export function IconPerson({ node, setNode, activeNode }) {
       ></path>
     </svg>
   );
-}
+};
+
+export const CustomMenu = ({ selectionMode }) => {
+  const [isBold, setBold] = useState(true);
+  const [isItalic, setItalic] = useState(true);
+  const [isUnderline, setUnderline] = useState(false);
+
+  useEffect(() => {
+    selectionMode(isBold);
+  }, [isBold]);
+
+  return (
+    <Menu menuButton={<MenuButton>Options</MenuButton>}>
+      <MenuItem
+        type="checkbox"
+        checked={isBold}
+        onClick={(e) => setBold(e.checked)}
+      >
+        Selection
+      </MenuItem>
+      <MenuItem
+        type="checkbox"
+        checked={isItalic}
+        onClick={(e) => setItalic(e.checked)}
+      >
+        Other feature
+      </MenuItem>
+      <MenuItem
+        type="checkbox"
+        checked={isUnderline}
+        onClick={(e) => setUnderline(e.checked)}
+      >
+        Some other feature
+      </MenuItem>
+    </Menu>
+  );
+};
